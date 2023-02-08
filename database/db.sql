@@ -1,0 +1,24 @@
+DROP DATABASE IF EXISTS database_liks;
+CREATE DATABASE database_liks CHARSET utf8m4;
+USE database_liks;
+
+-- USERS TABLE
+CREATE TABLE users(
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(20) NOT NULL,
+    password VARCHAR(60) NOT NULL,
+    email VARCHAR(120) NOT NULL,
+    fullname VARCHAR(100) NOT NULL,
+    user_id INT
+);
+
+-- LIKS TABLE
+CREATE TABLE links(
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    url VARCHAR(255) NOT NULL,
+    description TEXT,
+    user_id INT UNSIGNED,
+    create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
+);

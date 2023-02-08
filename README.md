@@ -9,7 +9,6 @@ Contar de que forma esta hecho, como funciona y cual es el objetivo en concreto 
 ```
 npm install
 ```
-v
 ### Compila y recarga en caliente para el desarrollo
 
 ```
