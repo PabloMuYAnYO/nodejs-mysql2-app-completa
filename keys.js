@@ -1,8 +1,8 @@
 module.exports = {
     database: {
         host: 'localhost',
-        user: 'root',
-        password: 'root',
+        user: 'pable',
+        password: '1234',
         database: 'database_links'
     }
 }
