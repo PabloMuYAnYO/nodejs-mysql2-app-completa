@@ -1,29 +1,45 @@
 const express = require('express');
 const router = express.Router();
 
-const pool = require('../database')
+const pool = require('../database');
 
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
-  const [ links ] = await pool.query('SELECT * FROM links')
-  res.json(links)
-  //res.send('LINKS!!!');
+  const [ links ] = await pool.query('SELECT * FROM links');
+  console.log(links);
+  res.render('links/list', { links });
+  
 });
 
 router.get('/add', (req, res) => {
-  res.render('links/add')
+  res.render('links/add');
 })
 
 router.post('/add', async (req, res) => {
-  const { title, url, description } = req.body;
+
+  const { title, url, description } = req.body
   const newLink = {
     title,
     url,
     description
   }
-  // console.log(newLink);
+
   await pool.query('INSERT INTO links SET ?', [newLink]);
-  res.send('<h1>Received</h1>')
+  res.redirect('/links');
+})
+
+
+router.get('/delete/:id', async (req, res) => {
+  const { id } = req.params;
+  await pool.query('DELETE FROM links WHERE id = ?', [id]);
+  res.redirect('/links');
+})
+
+router.get('/edit/:id', async (req, res) => {
+  const { id } = req.params;
+  const [ link ] = await pool.query('SELECT * FROM links WHERE id = ?', [id]);
+  console.log(link);
+  res.render('links/edit', {link:link[0]});
 })
 
 module.exports = router;
