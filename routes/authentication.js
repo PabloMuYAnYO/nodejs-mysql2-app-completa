@@ -2,8 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 /* GET users listing. */
-router.get('/', (req, res, next) => {
-  res.send('<h1>AUTHENTICATION PAGE!!</h1>');
+router.get('/signup', (req, res, next) => {
+  res.render('auth/signup');
+});
+
+router.post('/signup', (req, res, next) => {
+  console.log(req.body);
+  res.send('<h1>POSTED!!</h1>');
 });
 
 module.exports = router;

@@ -57,8 +57,8 @@ app.use((req, res, next) => {
 
 // * ROUTES
 app.use('/', indexRouter);
+app.use('/', authenticationRouter);
 app.use('/links', linksRouter);
-app.use('/authentication', authenticationRouter);
 
 
 // * PUBLIC DIR
