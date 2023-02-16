@@ -9,14 +9,16 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const smysql = require('express-mysql-session');
 const { database } = require('./keys');
+const passport = require('passport');
 
 // * ROUTER REQUIRES
 const indexRouter = require('./routes/index');
 const linksRouter = require('./routes/links');
 const authenticationRouter = require('./routes/authentication');
 
-// *APP USAGE
+// *APP INITIALIZATIONS
 const app = express();
+require('./lib/passport');
 
 // * OTHER MODULES USAGE
 app.use(device.capture())
@@ -28,7 +30,12 @@ app.engine('.hbs', engine({
   layoutsDir:  path.join(app.get('views'), 'layouts'),
   partialsDir:  path.join(app.get('views'), 'partials'),
   extname: '.hbs',
-  helpers: require('./lib/handlebars')
+  helpers: require('./lib/handlebars'),
+  runtimeOptions: {
+    allowProtoPropertiesByDefault: true,
+    allowProtoMethodsByDefault: true
+  }
+
 }))
 
 app.set('view engine', '.hbs');
@@ -46,6 +53,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
 
 // * GLOBAL VARS
 app.use((req, res, next) => {
